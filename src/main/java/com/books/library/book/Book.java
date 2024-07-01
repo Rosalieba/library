@@ -7,9 +7,11 @@ import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "book")
 public class Book {
     //region members
     @Id
@@ -17,23 +19,36 @@ public class Book {
     private Integer id;
     private String title;
     @ManyToMany
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @JoinTable(
+            name= "book-author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> author;
     private String summary;
     private Date publicationDate;
     private String readerCategory;
     private String bookCategory;
     @ManyToMany
-    @JoinColumn(name = "subject_id")
-    private Subject subject;
+    @JoinTable(
+            name = "book_subject",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private List<Subject> subject;
 
     @ManyToMany
-    @JoinColumn(name ="sub_subject_id")
-    private SubSubject subSubject;
+    @JoinTable(
+            name = "book_sub_subject",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "sub_subject_id")
+    )
+    private List<SubSubject> subSubject;
     //endregion
 
     //region constructor
-    public Book(Integer id, String title, Author author, String summary, Date publicationDate, String readerCategory, String bookCategory, Subject subject, SubSubject subSubject) {
+
+    public Book(Integer id, String title, List<Author> author, String summary, Date publicationDate, String readerCategory, String bookCategory, List<Subject> subject, List<SubSubject> subSubject) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -44,6 +59,8 @@ public class Book {
         this.subject = subject;
         this.subSubject = subSubject;
     }
+
+
     //endregion
 
     //region getter and setter
@@ -64,11 +81,11 @@ public class Book {
         this.title = title;
     }
 
-    public Author getAuthor() {
+    public List<Author> getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(List<Author> author) {
         this.author = author;
     }
 
@@ -104,26 +121,26 @@ public class Book {
         this.bookCategory = bookCategory;
     }
 
-    public Subject getSubject() {
+    public List<Subject> getSubject() {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public void setSubject(List<Subject> subject) {
         this.subject = subject;
     }
 
-    public SubSubject getSubSubject() {
+    public List<SubSubject> getSubSubject() {
         return subSubject;
     }
 
-    public void setSubSubject(SubSubject subSubject) {
+    public void setSubSubject(List<SubSubject> subSubject) {
         this.subSubject = subSubject;
     }
-
 
     //endregion
 
     //region equals and hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,9 +152,11 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id, title, author, summary, publicationDate, readerCategory, bookCategory, subject, subSubject);
     }
+
     //endregion
 
     //region toString
+
     @Override
     public String toString() {
         return "Book{" +
@@ -152,5 +171,6 @@ public class Book {
                 ", subSubject=" + subSubject +
                 '}';
     }
+
     //endregion
 }

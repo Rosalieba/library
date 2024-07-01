@@ -5,6 +5,7 @@ import com.books.library.book.Book;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,26 +15,27 @@ public class SubSubject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String subSubjectName;
+    @ManyToMany(mappedBy = "sub_subjects")
+    private List<Book> books;
     @ManyToMany
-    @JoinColumn(name = "book_id")
-    private Book book;
-    @ManyToMany
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "id")
     private Author author;
 
     @ManyToOne
-    @JoinColumn(name ="subject_id")
+    @JoinColumn(name ="id")
     private Subject subject;
     //endregion
 
     //region constructor
-    public SubSubject(Integer id, String subSubjectName, Book book, Author author, Subject subject) {
+
+    public SubSubject(Integer id, String subSubjectName, List<Book> books, Author author, Subject subject) {
         this.id = id;
         this.subSubjectName = subSubjectName;
-        this.book = book;
+        this.books = books;
         this.author = author;
         this.subject = subject;
     }
+
     //endregion
 
     //region getter and setter
@@ -53,12 +55,12 @@ public class SubSubject {
         this.subSubjectName = subSubjectName;
     }
 
-    public Book getBook() {
-        return book;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public Author getAuthor() {
@@ -79,29 +81,33 @@ public class SubSubject {
     //endregion
 
     //region equals and hashcode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SubSubject that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(subSubjectName, that.subSubjectName) && Objects.equals(book, that.book) && Objects.equals(author, that.author) && Objects.equals(subject, that.subject);
+        return Objects.equals(id, that.id) && Objects.equals(subSubjectName, that.subSubjectName) && Objects.equals(books, that.books) && Objects.equals(author, that.author) && Objects.equals(subject, that.subject);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, subSubjectName, book, author, subject);
+        return Objects.hash(id, subSubjectName, books, author, subject);
     }
+
     //endregion
 
     //region toString
+
     @Override
     public String toString() {
         return "SubSubject{" +
                 "id=" + id +
                 ", subSubjectName='" + subSubjectName + '\'' +
-                ", book=" + book +
+                ", books=" + books +
                 ", author=" + author +
                 ", subject=" + subject +
                 '}';
     }
+
     //endregion
 }

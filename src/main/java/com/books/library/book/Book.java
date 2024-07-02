@@ -43,7 +43,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "sub_subject_id")
     )
-    private List<SubSubject> subSubject;
+    private List<SubSubject> subSubjects;
     //endregion
 
     //region constructor
@@ -57,7 +57,7 @@ public class Book {
         this.readerCategory = readerCategory;
         this.bookCategory = bookCategory;
         this.subject = subject;
-        this.subSubject = subSubject;
+        this.subSubjects = subSubject;
     }
 
 
@@ -130,11 +130,11 @@ public class Book {
     }
 
     public List<SubSubject> getSubSubject() {
-        return subSubject;
+        return subSubjects;
     }
 
-    public void setSubSubject(List<SubSubject> subSubject) {
-        this.subSubject = subSubject;
+    public void setSubSubject(List<SubSubject> subSubjects) {
+        this.subSubjects = subSubjects;
     }
 
     //endregion
@@ -145,12 +145,12 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(subject, book.subject) && Objects.equals(subSubject, book.subSubject);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(subject, book.subject) && Objects.equals(subSubjects, book.subSubjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, summary, publicationDate, readerCategory, bookCategory, subject, subSubject);
+        return Objects.hash(id, title, author, summary, publicationDate, readerCategory, bookCategory, subject, subSubjects);
     }
 
     //endregion
@@ -168,7 +168,7 @@ public class Book {
                 ", readerCategory='" + readerCategory + '\'' +
                 ", bookCategory='" + bookCategory + '\'' +
                 ", subject=" + subject +
-                ", subSubject=" + subSubject +
+                ", subSubject=" + subSubjects +
                 '}';
     }
 

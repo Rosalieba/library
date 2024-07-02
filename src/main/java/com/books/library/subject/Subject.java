@@ -16,27 +16,24 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String subjectName;
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(mappedBy = "subject")
     private List<Book> books;
-    @ManyToMany
-    @JoinColumn(name = "id")
-    private Author author;
+    @ManyToMany(mappedBy = "subjects")
+    private List<Author> authors;
 
-    @OneToMany
-    @JoinColumn(name ="id")
-    private SubSubject subSubject;
+    @OneToMany(mappedBy = "subject")
+    private List<SubSubject> subSubjects;
     //endregion
 
     //region constructor
 
-    public Subject(Integer id, String subjectName, List<Book> books, Author author, SubSubject subSubject) {
+    public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, List<SubSubject> subSubjects) {
         this.id = id;
         this.subjectName = subjectName;
         this.books = books;
-        this.author = author;
-        this.subSubject = subSubject;
+        this.authors = authors;
+        this.subSubjects = subSubjects;
     }
-
     //endregion
 
     //region getter and setter
@@ -64,21 +61,22 @@ public class Subject {
         this.books = books;
     }
 
-    public Author getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
-    public SubSubject getSubSubject() {
-        return subSubject;
+    public List<SubSubject> getSubSubjects() {
+        return subSubjects;
     }
 
-    public void setSubSubject(SubSubject subSubject) {
-        this.subSubject = subSubject;
+    public void setSubSubjects(List<SubSubject> subSubjects) {
+        this.subSubjects = subSubjects;
     }
+
     //endregion
 
     //region equals and hashcode
@@ -87,28 +85,25 @@ public class Subject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Subject subject)) return false;
-        return Objects.equals(id, subject.id) && Objects.equals(subjectName, subject.subjectName) && Objects.equals(books, subject.books) && Objects.equals(author, subject.author) && Objects.equals(subSubject, subject.subSubject);
+        return Objects.equals(id, subject.id) && Objects.equals(subjectName, subject.subjectName) && Objects.equals(books, subject.books) && Objects.equals(authors, subject.authors) && Objects.equals(subSubjects, subject.subSubjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, subjectName, books, author, subSubject);
+        return Objects.hash(id, subjectName, books, authors, subSubjects);
     }
-
     //endregion
 
     //region toString
-
     @Override
     public String toString() {
         return "Subject{" +
                 "id=" + id +
                 ", subjectName='" + subjectName + '\'' +
                 ", books=" + books +
-                ", author=" + author +
-                ", subSubject=" + subSubject +
+                ", authors=" + authors +
+                ", subSubjects=" + subSubjects +
                 '}';
     }
-
     //endregion
 }

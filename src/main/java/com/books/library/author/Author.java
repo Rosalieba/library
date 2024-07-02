@@ -17,26 +17,34 @@ public class Author {
     private Integer id;
     private String forename;
     private String surname;
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "author")
     private List<Book> books;
     @ManyToMany
-    @JoinColumn(name = "id")
-    private Subject subject;
+    @JoinTable(
+            name = "author-subject",
+            joinColumns = {@JoinColumn(name = "author-id")},
+            inverseJoinColumns = {@JoinColumn(name = "subject_id")}
+    )
+    private List<Subject> subjects;
 
     @ManyToMany
-    @JoinColumn(name ="id")
-    private SubSubject subSubject;
+    @JoinTable(
+            name= "author-sub_subject",
+            joinColumns = {@JoinColumn(name = "author-id")},
+            inverseJoinColumns = {@JoinColumn(name = "sub_subject_id")}
+    )
+    private List<SubSubject> subSubjects;
     //endregion
 
     //region constructor
 
-    public Author(Integer id, String forename, String surname, List<Book> books, Subject subject, SubSubject subSubject) {
+    public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<SubSubject> subSubjects) {
         this.id = id;
         this.forename = forename;
         this.surname = surname;
         this.books = books;
-        this.subject = subject;
-        this.subSubject = subSubject;
+        this.subjects = subjects;
+        this.subSubjects = subSubjects;
     }
 
 
@@ -75,22 +83,22 @@ public class Author {
         this.books = books;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
     }
 
-    public SubSubject getSubSubject() {
-        return subSubject;
+    public List<SubSubject> getSubSubjects() {
+        return subSubjects;
     }
 
-    public void setSubSubject(SubSubject subSubject) {
-        this.subSubject = subSubject;
+    public void setSubSubjects(List<SubSubject> subSubjects) {
+        this.subSubjects = subSubjects;
     }
-    //endregion
+//endregion
 
     //region equals and hashcode
 
@@ -98,13 +106,14 @@ public class Author {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Author author)) return false;
-        return Objects.equals(id, author.id) && Objects.equals(forename, author.forename) && Objects.equals(surname, author.surname) && Objects.equals(books, author.books) && Objects.equals(subject, author.subject) && Objects.equals(subSubject, author.subSubject);
+        return Objects.equals(id, author.id) && Objects.equals(forename, author.forename) && Objects.equals(surname, author.surname) && Objects.equals(books, author.books) && Objects.equals(subjects, author.subjects) && Objects.equals(subSubjects, author.subSubjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, forename, surname, books, subject, subSubject);
+        return Objects.hash(id, forename, surname, books, subjects, subSubjects);
     }
+
 
     //endregion
 
@@ -117,8 +126,8 @@ public class Author {
                 ", forename='" + forename + '\'' +
                 ", surname='" + surname + '\'' +
                 ", books=" + books +
-                ", subject=" + subject +
-                ", subSubject=" + subSubject +
+                ", subjects=" + subjects +
+                ", subSubjects=" + subSubjects +
                 '}';
     }
 

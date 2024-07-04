@@ -1,7 +1,6 @@
 package com.books.library.author;
 
 import com.books.library.book.Book;
-import com.books.library.sub_subject.SubSubject;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
@@ -41,12 +40,12 @@ public class Author {
             joinColumns = {@JoinColumn(name = "author-id")},
             inverseJoinColumns = {@JoinColumn(name = "sub_subject_id")}
     )
-    private List<SubSubject> subSubjects;
+    private List<String> subSubjects;
     //endregion
 
     //region constructor
 
-    public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<SubSubject> subSubjects) {
+    public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<String> subSubjects) {
         this.id = id;
         this.forename = forename;
         this.surname = surname;
@@ -99,11 +98,11 @@ public class Author {
         this.subjects = subjects;
     }
 
-    public List<SubSubject> getSubSubjects() {
+    public List<String> getSubSubjects() {
         return subSubjects;
     }
 
-    public void setSubSubjects(List<SubSubject> subSubjects) {
+    public void setSubSubjects(List<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 //endregion

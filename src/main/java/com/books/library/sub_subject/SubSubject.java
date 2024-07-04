@@ -13,7 +13,15 @@ import java.util.Objects;
 public class SubSubject {
     //region members
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "sub_subject_sequence",
+            sequenceName =  "sub_subject_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "sub_subject_sequence"
+    )
     private Integer id;
     private String subSubjectName;
     @ManyToMany(mappedBy = "subSubjects")

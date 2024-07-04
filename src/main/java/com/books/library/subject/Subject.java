@@ -13,7 +13,15 @@ import java.util.Objects;
 public class Subject {
     //region members
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "subject_sequence",
+            sequenceName = "subject_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "subject_sequence"
+    )
     private Integer id;
     private String subjectName;
     @ManyToMany(mappedBy = "subject")

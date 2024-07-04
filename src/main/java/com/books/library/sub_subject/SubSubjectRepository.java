@@ -1,4 +1,8 @@
 package com.books.library.sub_subject;
 
-public class SubSubjectRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SubSubjectRepository extends JpaRepository<SubSubject, Integer> {
+
+
 }

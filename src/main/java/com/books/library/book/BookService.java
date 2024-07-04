@@ -8,7 +8,7 @@ import java.util.List;
 public class BookService {
 
     public List<String> getBooks() {
-        return List.of("Hi", "There", ":-)");
+        return List.of("Hi", "Books", ":-)");
     }
 
 

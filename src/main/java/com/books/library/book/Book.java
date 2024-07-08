@@ -49,6 +49,16 @@ public class Book {
     //endregion
 
     //region constructor
+    public Book() {
+    }
+
+
+    public Book(Integer id, String title, String summary) {
+        this.id = id;
+        this.title = title;
+        this.summary = summary;
+    }
+
     public Book(Integer id, String title, List<Author> author, String summary, Date publicationDate, String readerCategory, String bookCategory, String isbn, List<Subject> subject, List<String> subSubjects) {
         this.id = id;
         this.title = title;

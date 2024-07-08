@@ -2,7 +2,6 @@ package com.books.library.book;
 
 
 import com.books.library.author.Author;
-import com.books.library.sub_subject.SubSubject;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
@@ -37,6 +36,7 @@ public class Book {
     private Date publicationDate;
     private String readerCategory;
     private String bookCategory;
+    private String isbn;
     @ManyToMany
     @JoinTable(
             name = "book_subject",
@@ -45,18 +45,11 @@ public class Book {
     )
     private List<Subject> subject;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_sub_subject",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "sub_subject_id")
-    )
-    private List<SubSubject> subSubjects;
+    private List<String> subSubjects;
     //endregion
 
     //region constructor
-
-    public Book(Integer id, String title, List<Author> author, String summary, Date publicationDate, String readerCategory, String bookCategory, List<Subject> subject, List<SubSubject> subSubject) {
+    public Book(Integer id, String title, List<Author> author, String summary, Date publicationDate, String readerCategory, String bookCategory, String isbn, List<Subject> subject, List<String> subSubjects) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -64,11 +57,10 @@ public class Book {
         this.publicationDate = publicationDate;
         this.readerCategory = readerCategory;
         this.bookCategory = bookCategory;
+        this.isbn = isbn;
         this.subject = subject;
-        this.subSubjects = subSubject;
+        this.subSubjects = subSubjects;
     }
-
-
     //endregion
 
     //region getter and setter
@@ -133,19 +125,26 @@ public class Book {
         return subject;
     }
 
-    public void setSubject(List<Subject> subject) {
-        this.subject = subject;
-    }
-
-    public List<SubSubject> getSubSubject() {
-        return subSubjects;
-    }
-
-    public void setSubSubject(List<SubSubject> subSubjects) {
+    public void setSubSubject(List<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 
-    //endregion
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public List<String> getSubSubjects() {
+        return subSubjects;
+    }
+
+    public void setSubSubjects(List<String> subSubjects) {
+        this.subSubjects = subSubjects;
+    }
+//endregion
 
     //region equals and hashCode
 
@@ -153,13 +152,14 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(subject, book.subject) && Objects.equals(subSubjects, book.subSubjects);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(isbn, book.isbn) && Objects.equals(subject, book.subject) && Objects.equals(subSubjects, book.subSubjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, summary, publicationDate, readerCategory, bookCategory, subject, subSubjects);
+        return Objects.hash(id, title, author, summary, publicationDate, readerCategory, bookCategory, isbn, subject, subSubjects);
     }
+
 
     //endregion
 
@@ -175,10 +175,12 @@ public class Book {
                 ", publicationDate=" + publicationDate +
                 ", readerCategory='" + readerCategory + '\'' +
                 ", bookCategory='" + bookCategory + '\'' +
+                ", isbn='" + isbn + '\'' +
                 ", subject=" + subject +
-                ", subSubject=" + subSubjects +
+                ", subSubjects=" + subSubjects +
                 '}';
     }
+
 
     //endregion
 }

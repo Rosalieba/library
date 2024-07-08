@@ -2,9 +2,7 @@ package com.books.library.subject;
 
 import com.books.library.author.Author;
 import com.books.library.book.Book;
-import com.books.library.sub_subject.SubSubject;
 import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -29,13 +27,12 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private List<Author> authors;
 
-    @OneToMany(mappedBy = "subject")
-    private List<SubSubject> subSubjects;
+    private List<String> subSubjects;
     //endregion
 
     //region constructor
 
-    public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, List<SubSubject> subSubjects) {
+    public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, List<String> subSubjects) {
         this.id = id;
         this.subjectName = subjectName;
         this.books = books;
@@ -77,11 +74,11 @@ public class Subject {
         this.authors = authors;
     }
 
-    public List<SubSubject> getSubSubjects() {
+    public List<String> getSubSubjects() {
         return subSubjects;
     }
 
-    public void setSubSubjects(List<SubSubject> subSubjects) {
+    public void setSubSubjects(List<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 

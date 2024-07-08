@@ -34,12 +34,7 @@ public class Author {
     )
     private List<Subject> subjects;
 
-    @ManyToMany
-    @JoinTable(
-            name= "author-sub_subject",
-            joinColumns = {@JoinColumn(name = "author-id")},
-            inverseJoinColumns = {@JoinColumn(name = "sub_subject_id")}
-    )
+
     private List<String> subSubjects;
     //endregion
 

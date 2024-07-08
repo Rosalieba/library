@@ -3,8 +3,11 @@ package com.books.library.subject;
 import com.books.library.author.Author;
 import com.books.library.book.Book;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "subject")
@@ -27,18 +30,26 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private List<Author> authors;
 
-    private List<String> subSubjects;
+    @ManyToMany
+    @JoinTable (
+        name = "subsubjects",
+        joinColumns = @JoinColumn(name = "subject_id"),
+        inverseJoinColumns = @JoinColumn(name = "subsubject_id")
+    )
+    private Set<Subject> subSubjects = new HashSet<>();
     //endregion
 
     //region constructor
 
-    public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, List<String> subSubjects) {
+    public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, Set<Subject> subSubjects) {
         this.id = id;
         this.subjectName = subjectName;
         this.books = books;
         this.authors = authors;
         this.subSubjects = subSubjects;
     }
+
+
     //endregion
 
     //region getter and setter
@@ -74,11 +85,11 @@ public class Subject {
         this.authors = authors;
     }
 
-    public List<String> getSubSubjects() {
+    public Set<Subject> getSubSubjects() {
         return subSubjects;
     }
 
-    public void setSubSubjects(List<String> subSubjects) {
+    public void setSubSubjects(Set<Subject> subSubjects) {
         this.subSubjects = subSubjects;
     }
 

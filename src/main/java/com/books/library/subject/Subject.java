@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "subject")
+@Table(name = "subjects")
 public class Subject {
     //region members
     @Id
@@ -25,7 +25,7 @@ public class Subject {
     )
     private Integer id;
     private String subjectName;
-    @ManyToMany(mappedBy = "subject")
+    @ManyToMany(mappedBy = "subjects")
     private List<Book> books;
     @ManyToMany(mappedBy = "subjects")
     private List<Author> authors;

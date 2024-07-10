@@ -5,12 +5,13 @@ import com.books.library.author.Author;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "book")
+@Table(name = "books")
 public class Book {
     //region members
     @Id
@@ -27,11 +28,11 @@ public class Book {
     private String title;
     @ManyToMany
     @JoinTable(
-            name= "book-author",
+            name= "books_authors",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private List<Author> author;
+    private List<Author> authors = new ArrayList<>();
     private String summary;
     private Date publicationDate;
     private String readerCategory;
@@ -39,11 +40,11 @@ public class Book {
     private String isbn;
     @ManyToMany
     @JoinTable(
-            name = "book_subject",
+            name = "books_subjects",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
-    private List<Subject> subject;
+    private List<Subject> subjects;
 
     private List<String> subSubjects;
     //endregion
@@ -52,25 +53,18 @@ public class Book {
     public Book() {
     }
 
-
-    public Book(Integer id, String title, String summary) {
+    /*public Book(Integer id, String title, List<Integer> authors, String summary, Date publicationDate, String readerCategory, String bookCategory, String isbn, List<Subject> subjects, List<String> subSubjects) {
         this.id = id;
         this.title = title;
-        this.summary = summary;
-    }
-
-    public Book(Integer id, String title, List<Author> author, String summary, Date publicationDate, String readerCategory, String bookCategory, String isbn, List<Subject> subject, List<String> subSubjects) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
+        this.authors = authors;
         this.summary = summary;
         this.publicationDate = publicationDate;
         this.readerCategory = readerCategory;
         this.bookCategory = bookCategory;
         this.isbn = isbn;
-        this.subject = subject;
+        this.subjects = subjects;
         this.subSubjects = subSubjects;
-    }
+    }*/
     //endregion
 
     //region getter and setter
@@ -91,12 +85,12 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(List<Author> author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public String getSummary() {
@@ -131,14 +125,17 @@ public class Book {
         this.bookCategory = bookCategory;
     }
 
-    public List<Subject> getSubject() {
-        return subject;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
     public void setSubSubject(List<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
     public String getIsbn() {
         return isbn;
     }
@@ -162,12 +159,12 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(isbn, book.isbn) && Objects.equals(subject, book.subject) && Objects.equals(subSubjects, book.subSubjects);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(isbn, book.isbn) && Objects.equals(subjects, book.subjects) && Objects.equals(subSubjects, book.subSubjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, summary, publicationDate, readerCategory, bookCategory, isbn, subject, subSubjects);
+        return Objects.hash(id, title, authors, summary, publicationDate, readerCategory, bookCategory, isbn, subjects, subSubjects);
     }
 
 
@@ -180,13 +177,13 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author=" + author +
+                ", author=" + authors +
                 ", summary='" + summary + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", readerCategory='" + readerCategory + '\'' +
                 ", bookCategory='" + bookCategory + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", subject=" + subject +
+                ", subjects=" + subjects +
                 ", subSubjects=" + subSubjects +
                 '}';
     }

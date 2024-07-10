@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "author")
+@Table(name = "authors")
 public class Author {
     //region members
     @Id
@@ -24,12 +24,12 @@ public class Author {
     private Integer id;
     private String forename;
     private String surname;
-    @ManyToMany(mappedBy = "author")
+    @ManyToMany(mappedBy = "authors")
     private List<Book> books;
     @ManyToMany
     @JoinTable(
-            name = "author-subject",
-            joinColumns = {@JoinColumn(name = "author-id")},
+            name = "authors_subjects",
+            joinColumns = {@JoinColumn(name = "author_id")},
             inverseJoinColumns = {@JoinColumn(name = "subject_id")}
     )
     private List<Subject> subjects;
@@ -39,6 +39,12 @@ public class Author {
     //endregion
 
     //region constructor
+    public Author(){}
+    public Author(Integer id, String forename, String surname){
+        this.id = id;
+        this.forename = forename;
+        this.surname = surname;
+    }
 
     public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<String> subSubjects) {
         this.id = id;

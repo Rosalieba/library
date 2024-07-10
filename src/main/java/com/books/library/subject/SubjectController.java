@@ -10,13 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/subject")
 public class SubjectController {
-
-    private final SubjectService subjectService;
     @Autowired
-    public SubjectController(SubjectService subjectService) {
-        this.subjectService = subjectService;
-    }
+    private SubjectService subjectService;
 
     @GetMapping
-    public List<String> getSubjects() {return subjectService.getSubjects(); }
+    public List<Subject> getSubjects() {
+        return this.subjectService.getSubjects();
+    }
 }

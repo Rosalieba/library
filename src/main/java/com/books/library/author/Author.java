@@ -40,20 +40,15 @@ public class Author {
 
     //region constructor
     public Author(){}
-    public Author(Integer id, String forename, String surname){
-        this.id = id;
-        this.forename = forename;
-        this.surname = surname;
-    }
 
-    public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<String> subSubjects) {
+    /*public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<String> subSubjects) {
         this.id = id;
         this.forename = forename;
         this.surname = surname;
         this.books = books;
         this.subjects = subjects;
         this.subSubjects = subSubjects;
-    }
+    }*/
 
 
     //endregion

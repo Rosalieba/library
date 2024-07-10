@@ -40,16 +40,15 @@ public class Subject {
     //endregion
 
     //region constructor
+    public Subject() {}
 
-    public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, Set<Subject> subSubjects) {
+    /*public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, Set<Subject> subSubjects) {
         this.id = id;
         this.subjectName = subjectName;
         this.books = books;
         this.authors = authors;
         this.subSubjects = subSubjects;
-    }
-
-
+    }*/
     //endregion
 
     //region getter and setter

@@ -1,9 +1,8 @@
 package com.books.library.author;
 
+import com.books.library.book.BookController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +17,14 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<String> getAuthors() {
+    public List<Author> getAuthors() {
         return authorService.getAuthors();
     }
+
+    @PostMapping
+    public void createAuthor(@RequestBody AddAuthorRequest request) {
+        this.authorService.createAuthor(request.forename(), request.surname());
+    }
+
+    public record AddAuthorRequest(String forename, String surname){};
 }

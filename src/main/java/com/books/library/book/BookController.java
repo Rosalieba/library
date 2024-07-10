@@ -1,5 +1,6 @@
 package com.books.library.book;
 
+import com.books.library.author.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+
     @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -23,8 +25,8 @@ public class BookController {
     }
 
     @PostMapping
-    public void createBook(@RequestBody Book book) {
-        this.bookService.createBook(book);
+    public void createBook(@RequestBody AddBookRequest request) {
+        this.bookService.createBook(request.title(), request.summary(),request.authorIds());
     }
-
+    public record AddBookRequest(String title, String summary, List<Integer> authorIds){};
 }

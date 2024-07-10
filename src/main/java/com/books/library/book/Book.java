@@ -44,7 +44,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
-    private List<Subject> subjects;
+    private List<Subject> subjects = new ArrayList<>();
 
     private List<String> subSubjects;
     //endregion

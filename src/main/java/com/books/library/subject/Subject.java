@@ -4,10 +4,7 @@ import com.books.library.author.Author;
 import com.books.library.book.Book;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "subjects")
@@ -26,9 +23,9 @@ public class Subject {
     private Integer id;
     private String subjectName;
     @ManyToMany(mappedBy = "subjects")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
     @ManyToMany(mappedBy = "subjects")
-    private List<Author> authors;
+    private List<Author> authors = new ArrayList<>();
 
     @ManyToMany
     @JoinTable (

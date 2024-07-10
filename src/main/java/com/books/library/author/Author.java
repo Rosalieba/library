@@ -4,6 +4,7 @@ import com.books.library.book.Book;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,17 +26,17 @@ public class Author {
     private String forename;
     private String surname;
     @ManyToMany(mappedBy = "authors")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
     @ManyToMany
     @JoinTable(
             name = "authors_subjects",
             joinColumns = {@JoinColumn(name = "author_id")},
             inverseJoinColumns = {@JoinColumn(name = "subject_id")}
     )
-    private List<Subject> subjects;
+    private List<Subject> subjects = new ArrayList<>();
 
 
-    private List<String> subSubjects;
+    private List<String> subSubjects = new ArrayList<>();
     //endregion
 
     //region constructor

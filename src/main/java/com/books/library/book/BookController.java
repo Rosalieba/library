@@ -11,13 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/book")
 public class BookController {
-
-    private final BookService bookService;
-
     @Autowired
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
+    private BookService bookService;
 
     @GetMapping
     public List<Book> getBooks() {

@@ -9,12 +9,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/author")
 public class AuthorController {
-
-    private final AuthorService authorService;
     @Autowired
-    public AuthorController(AuthorService authorService) {
-        this.authorService = authorService;
-    }
+    private AuthorService authorService;
 
     @GetMapping
     public List<Author> getAuthors() {

@@ -6,11 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class AuthorService {
-    private final AuthorRepository authorRepository;
     @Autowired
-    public AuthorService(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+    private AuthorRepository authorRepository;
 
     public List<Author> getAuthors() {
         return authorRepository.findAll();

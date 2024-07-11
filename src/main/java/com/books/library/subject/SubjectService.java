@@ -23,8 +23,8 @@ public class SubjectService {
         subject.setSubjectName(subjectName);
         for (Integer bookId:bookIds) {
             Book book = bookRepository.findById(bookId).orElse(null);
-            if (bookId != null) {
-                book.setId(bookId);
+            if (book != null) {
+                subject.getBooks().add(book);
             } else {
                 //exception handling
             }

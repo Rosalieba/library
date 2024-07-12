@@ -4,9 +4,7 @@ import com.books.library.book.Book;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "authors")
@@ -25,15 +23,20 @@ public class Author {
     private Integer id;
     private String forename;
     private String surname;
-    @ManyToMany(mappedBy = "authors")
-    private List<Book> books = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name= "books_authors",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private Set<Book> books = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "authors_subjects",
             joinColumns = {@JoinColumn(name = "author_id")},
             inverseJoinColumns = {@JoinColumn(name = "subject_id")}
     )
-    private List<Subject> subjects = new ArrayList<>();
+    private Set<Subject> subjects = new HashSet<>();
 
 
     private List<String> subSubjects = new ArrayList<>();
@@ -41,17 +44,6 @@ public class Author {
 
     //region constructor
     public Author(){}
-
-    /*public Author(Integer id, String forename, String surname, List<Book> books, List<Subject> subjects, List<String> subSubjects) {
-        this.id = id;
-        this.forename = forename;
-        this.surname = surname;
-        this.books = books;
-        this.subjects = subjects;
-        this.subSubjects = subSubjects;
-    }*/
-
-
     //endregion
 
     //region getter and setter
@@ -79,19 +71,19 @@ public class Author {
         this.surname = surname;
     }
 
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 
-    public List<Subject> getSubjects() {
+    public Set<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<Subject> subjects) {
+    public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
 

@@ -9,6 +9,7 @@ import java.util.*;
 @Entity
 @Table(name = "subjects")
 public class Subject {
+
     //region members
     @Id
     @SequenceGenerator(
@@ -22,10 +23,20 @@ public class Subject {
     )
     private Integer id;
     private String subjectName;
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany
+    @JoinTable(
+            name = "books_subjects",
+            joinColumns = @JoinColumn(name = "subject_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private List<Book> books = new ArrayList<>();
-    @ManyToMany(mappedBy = "subjects")
-    private List<Author> authors = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "authors_subjects",
+            joinColumns = {@JoinColumn(name = "subject_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")}
+    )
+    private Set<Author> authors = new HashSet<>();
 
     @ManyToMany
     @JoinTable (
@@ -39,13 +50,6 @@ public class Subject {
     //region constructor
     public Subject() {}
 
-    /*public Subject(Integer id, String subjectName, List<Book> books, List<Author> authors, Set<Subject> subSubjects) {
-        this.id = id;
-        this.subjectName = subjectName;
-        this.books = books;
-        this.authors = authors;
-        this.subSubjects = subSubjects;
-    }*/
     //endregion
 
     //region getter and setter
@@ -73,11 +77,11 @@ public class Subject {
         this.books = books;
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 

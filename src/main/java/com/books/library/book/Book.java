@@ -1,14 +1,10 @@
 package com.books.library.book;
 
-
 import com.books.library.author.Author;
 import com.books.library.subject.Subject;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "books")
@@ -32,7 +28,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private List<Author> authors = new ArrayList<>();
+    private Set<Author> authors = new HashSet<>();
     private String summary;
     private Date publicationDate;
     private String readerCategory;
@@ -44,7 +40,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
-    private List<Subject> subjects = new ArrayList<>();
+    private Set<Subject> subjects = new HashSet<>();
 
     private List<String> subSubjects;
     //endregion
@@ -52,19 +48,6 @@ public class Book {
     //region constructor
     public Book() {
     }
-
-    /*public Book(Integer id, String title, List<Integer> authors, String summary, Date publicationDate, String readerCategory, String bookCategory, String isbn, List<Subject> subjects, List<String> subSubjects) {
-        this.id = id;
-        this.title = title;
-        this.authors = authors;
-        this.summary = summary;
-        this.publicationDate = publicationDate;
-        this.readerCategory = readerCategory;
-        this.bookCategory = bookCategory;
-        this.isbn = isbn;
-        this.subjects = subjects;
-        this.subSubjects = subSubjects;
-    }*/
     //endregion
 
     //region getter and setter
@@ -85,11 +68,11 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 
@@ -125,7 +108,7 @@ public class Book {
         this.bookCategory = bookCategory;
     }
 
-    public List<Subject> getSubjects() {
+    public Set<Subject> getSubjects() {
         return subjects;
     }
 
@@ -133,7 +116,7 @@ public class Book {
         this.subSubjects = subSubjects;
     }
 
-    public void setSubjects(List<Subject> subjects) {
+    public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
     public String getIsbn() {

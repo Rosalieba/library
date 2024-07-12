@@ -7,10 +7,13 @@ import com.books.library.subject.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class BookService {
+
+    //region members
     @Autowired
     private BookRepository bookRepository;
     @Autowired
@@ -18,16 +21,16 @@ public class BookService {
     @Autowired
     private SubjectRepository subjectRepository;
     Book book = new Book();
+    //endregion
 
-
+    //region CRUD methods
     public List<Book> getBooks() {
         return this.bookRepository.findAll();
     }
 
-    public void createBook(String title, String summary, List<Integer> authorIds, List<Integer> subjectIds) {
-        //Book book = new Book();
+    public void createBook(String title, List<Integer> authorIds, String summary, Date publicationDate,
+                           String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds) {
         book.setTitle(title);
-        book.setSummary(summary);
         for (Integer authorId:authorIds) {
             Author author = authorRepository.findById(authorId).orElse(null);
             if (author != null){
@@ -36,7 +39,11 @@ public class BookService {
                 //exception handling
             }
         }
-
+        book.setSummary(summary);
+        book.setPublicationDate(publicationDate);
+        book.setReaderCategory(readerCategory);
+        book.setBookCategory(bookCategory);
+        book.setIsbn(isbn);
         for (Integer subjectId:subjectIds) {
             Subject subject = subjectRepository.findById(subjectId).orElse(null);
             if (subject != null){
@@ -48,14 +55,8 @@ public class BookService {
        this.bookRepository.save(book);
     }
 
-    /*public void updateBook(String title, String summary, List<Integer> authorIds) {
-        book.getTitle();
-        book.getSummary();
-        book.getAuthors();
-
-    }*/
-
     public void deleteBook(Integer id) {
         this.bookRepository.deleteById(id);
     }
+    //endregion
 }

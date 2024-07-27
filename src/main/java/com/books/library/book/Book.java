@@ -42,7 +42,7 @@ public class Book {
     )
     private Set<Subject> subjects = new HashSet<>();
 
-    private List<String> subSubjects;
+    private Set<String> subSubjects = new HashSet<>();
     //endregion
 
     //region constructor
@@ -112,7 +112,7 @@ public class Book {
         return subjects;
     }
 
-    public void setSubSubject(List<String> subSubjects) {
+    public void setSubSubject(Set<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 
@@ -127,11 +127,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public List<String> getSubSubjects() {
+    public Set<String> getSubSubjects() {
         return subSubjects;
     }
 
-    public void setSubSubjects(List<String> subSubjects) {
+    public void setSubSubjects(Set<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 //endregion

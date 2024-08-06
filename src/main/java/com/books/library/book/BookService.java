@@ -6,9 +6,14 @@ import com.books.library.subject.Subject;
 import com.books.library.subject.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class BookService {
@@ -53,6 +58,23 @@ public class BookService {
             }
         }
        this.bookRepository.save(book);
+    }
+
+    public void patchBook(Integer id, String title ){
+        Book existingBook = bookRepository.findById(id).orElse(null);
+
+        if (existingBook != null) {
+            if (title != null) {
+                existingBook.setTitle(title);
+            }
+            this.bookRepository.save(existingBook);
+
+        }
+        /*Function<String, String> testFunction = (input) -> {
+            return input + " X";
+
+        };
+        testFunction.apply("Hello ");*/
     }
 
     public void deleteBook(Integer id) {

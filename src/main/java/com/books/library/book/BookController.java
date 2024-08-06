@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/book")
@@ -30,10 +31,17 @@ public class BookController {
     public void deleteBook(@PathVariable("bookId") Integer id) {
         this.bookService.deleteBook(id);
     }
+
+    @PatchMapping(path = "{bookId}")
+    public void updateBook(@PathVariable("bookId") Integer id, @RequestBody PatchBookRequest request) {
+        this.bookService.patchBook(id, request.title());
+    }
     //endregion
 
     //region record
     public record AddBookRequest(String title, List<Integer> authorIds, String summary, Date publicationDate,
                                  String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds){};
+
+    public record PatchBookRequest(String title) {};
     //endregion
 }

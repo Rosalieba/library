@@ -31,6 +31,11 @@ public class AuthorController {
         this.authorService.createAuthor(request.forename(), request.surname(), request.bookIds(), request.subjectIds());
     }
 
+    @PatchMapping(path = "{authorId}")
+    public void updateAuthor(@PathVariable("authorId") Integer id, @RequestBody PatchAuthorRequest request) {
+        this.authorService.patchAuthor(id, request.forename(), request.surname(), request.bookIds(), request.subjectIds());
+    }
+
     @DeleteMapping(path = "{authorId}")
     public void deleteAuthor(@PathVariable("authorId") Integer id) {
         this.authorService.deleteAuthor(id);
@@ -39,5 +44,8 @@ public class AuthorController {
 
     //region record classes
     public record AddAuthorRequest(String forename, String surname, List<Integer> bookIds, List<Integer> subjectIds){};
+
+    public record PatchAuthorRequest(String forename, String surname, List<Integer> bookIds,
+                                     List<Integer> subjectIds){};
     //endregion
 }

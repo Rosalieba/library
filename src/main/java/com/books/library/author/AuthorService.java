@@ -4,12 +4,13 @@ import com.books.library.book.Book;
 import com.books.library.book.BookRepository;
 import com.books.library.subject.Subject;
 import com.books.library.subject.SubjectRepository;
-import com.books.library.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class AuthorService {
 
@@ -49,6 +50,47 @@ public class AuthorService {
             }
         }
         this.authorRepository.save(author);
+    }
+
+    public void patchAuthor(Integer id, String forename, String surname, List<Integer> bookIds,
+                            List<Integer> subjectIds) {
+        Author existingAuthor = authorRepository.findById(id).orElse(null);
+        Set<Book> books = new HashSet<>();
+        Set<Subject> subjects = new HashSet<>();
+        if (existingAuthor != null) {
+            if (forename != null) {
+                existingAuthor.setForename(forename);
+            }
+            if (surname != null) {
+                existingAuthor.setSurname(surname);
+            }
+            if (bookIds != null) {
+                for (Integer bookId:bookIds) {
+                    Book book = bookRepository.findById(bookId).orElse(null);
+                    if (book != null) {
+                        books.add(book);
+                    } else {
+                        //TODO exception handling
+                    }
+                }
+                existingAuthor.setBooks(books);
+            }
+            if (subjectIds != null) {
+                for (Integer subjectId:subjectIds) {
+                    Subject subject = subjectRepository.findById(subjectId).orElse(null);
+                    if (subject != null) {
+                        subjects.add(subject);
+                    } else {
+                        //TODO exception handling
+                    }
+                }
+                existingAuthor.setSubjects(subjects);
+            }
+            this.authorRepository.save(existingAuthor);
+        }
+
+
+
     }
 
     public void deleteAuthor(Integer id) {

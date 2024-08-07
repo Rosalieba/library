@@ -20,21 +20,19 @@ public class BookController {
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
-
     @PostMapping
     public void createBook(@RequestBody AddBookRequest request) {
         this.bookService.createBook(request.title(), request.authorIds(), request.summary(), request.publicationDate(),
                 request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds());
     }
-    @DeleteMapping(path = "{bookId}")
-    public void deleteBook(@PathVariable("bookId") Integer id) {
-        this.bookService.deleteBook(id);
-    }
-
     @PatchMapping(path = "{bookId}")
     public void updateBook(@PathVariable("bookId") Integer id, @RequestBody PatchBookRequest request) {
         this.bookService.patchBook(id, request.title(), request.authorIds(), request.summary(),
                 request.publicationDate(), request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds());
+    }
+    @DeleteMapping(path = "{bookId}")
+    public void deleteBook(@PathVariable("bookId") Integer id) {
+        this.bookService.deleteBook(id);
     }
     //endregion
 

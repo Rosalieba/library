@@ -34,7 +34,8 @@ public class BookController {
 
     @PatchMapping(path = "{bookId}")
     public void updateBook(@PathVariable("bookId") Integer id, @RequestBody PatchBookRequest request) {
-        this.bookService.patchBook(id, request.title(), request.authorIds(), request.summary(), request.publicationDate(), request.readerCategory(), request.bookCategory());
+        this.bookService.patchBook(id, request.title(), request.authorIds(), request.summary(),
+                request.publicationDate(), request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds());
     }
     //endregion
 
@@ -42,6 +43,7 @@ public class BookController {
     public record AddBookRequest(String title, List<Integer> authorIds, String summary, Date publicationDate,
                                  String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds){};
 
-    public record PatchBookRequest(String title, List<Integer> authorIds, String summary, Date publicationDate, String readerCategory, String bookCategory) {};
+    public record PatchBookRequest(String title, List<Integer> authorIds, String summary, Date publicationDate,
+                                   String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds) {};
     //endregion
 }

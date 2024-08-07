@@ -57,9 +57,11 @@ public class BookService {
        this.bookRepository.save(book);
     }
 
-    public void patchBook(Integer id, String title, List<Integer> authorIds, String summary, Date publicationDate, String readerCategory, String bookCategory){
+    public void patchBook(Integer id, String title, List<Integer> authorIds, String summary, Date publicationDate,
+                          String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds){
         Book existingBook = bookRepository.findById(id).orElse(null);
         Set<Author> authors = new HashSet<>();
+        Set<Subject> subjects = new HashSet<>();
 
         if (existingBook != null) {
             if (title != null) {
@@ -87,6 +89,20 @@ public class BookService {
             }
             if (bookCategory != null) {
                 existingBook.setBookCategory(bookCategory);
+            }
+            if (isbn != null) {
+                existingBook.setIsbn(isbn);
+            }
+            if (subjectIds != null) {
+                for (Integer subjectId:subjectIds) {
+                    Subject subject = subjectRepository.findById(subjectId).orElse(null);
+                    if (subject != null) {
+                        subjects.add(subject);
+                    } else {
+                        //exception handling
+                    }
+                }
+                existingBook.setSubjects(subjects);
             }
             this.bookRepository.save(existingBook);
 

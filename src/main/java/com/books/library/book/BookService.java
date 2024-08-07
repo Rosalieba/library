@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -60,12 +57,24 @@ public class BookService {
        this.bookRepository.save(book);
     }
 
-    public void patchBook(Integer id, String title ){
+    public void patchBook(Integer id, String title, List<Integer> authorIds ){
         Book existingBook = bookRepository.findById(id).orElse(null);
+        Set<Author> authors = new HashSet<>();
 
         if (existingBook != null) {
             if (title != null) {
                 existingBook.setTitle(title);
+            }
+            if (authorIds != null) {
+                for (Integer authorId:authorIds) {
+                    Author author = authorRepository.findById(authorId).orElse(null);
+                    if (author != null) {
+                        authors.add(author);
+                    } else {
+                        //exception handling
+                    }
+                }
+                existingBook.setAuthors(authors);
             }
             this.bookRepository.save(existingBook);
 

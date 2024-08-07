@@ -37,7 +37,7 @@ public class AuthorService {
             if (book != null) {
                 author.getBooks().add(book);
             } else {
-                //handling exception
+                //TODO handling exception
             }
         }
         for (Integer subjectId: subjectIds) {
@@ -45,7 +45,7 @@ public class AuthorService {
             if (subject != null) {
                 author.getSubjects().add(subject);
             } else {
-                //handling exception
+                //TODO handling exception
             }
         }
         this.authorRepository.save(author);

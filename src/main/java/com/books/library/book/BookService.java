@@ -6,11 +6,11 @@ import com.books.library.subject.Subject;
 import com.books.library.subject.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
-import java.util.*;
-import java.util.function.Function;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookService {
@@ -38,7 +38,7 @@ public class BookService {
             if (author != null){
                 book.getAuthors().add(author);
             } else {
-                //exception handling
+                //TODO exception handling
             }
         }
         book.setSummary(summary);
@@ -51,7 +51,7 @@ public class BookService {
             if (subject != null){
                 book.getSubjects().add(subject);
             } else {
-                //exception handling
+                //TODO exception handling
             }
         }
        this.bookRepository.save(book);
@@ -73,7 +73,7 @@ public class BookService {
                     if (author != null) {
                         authors.add(author);
                     } else {
-                        //exception handling
+                        //TODO exception handling
                     }
                 }
                 existingBook.setAuthors(authors);
@@ -99,7 +99,7 @@ public class BookService {
                     if (subject != null) {
                         subjects.add(subject);
                     } else {
-                        //exception handling
+                        //TODO exception handling
                     }
                 }
                 existingBook.setSubjects(subjects);

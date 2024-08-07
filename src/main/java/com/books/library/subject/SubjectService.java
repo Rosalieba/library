@@ -34,7 +34,7 @@ public class SubjectService {
             if (book != null) {
                 subject.getBooks().add(book);
             } else {
-                //exception handling
+                //TODO exception handling
             }
         }
         for (Integer authorId:authorIds) {
@@ -42,7 +42,7 @@ public class SubjectService {
             if (author != null) {
                 subject.getAuthors().add(author);
             } else {
-                //exception handling
+                //TODO exception handling
             }
         }
         this.subjectRepository.save(subject);

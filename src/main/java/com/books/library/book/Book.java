@@ -2,6 +2,8 @@ package com.books.library.book;
 
 import com.books.library.author.Author;
 import com.books.library.subject.Subject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -22,6 +24,7 @@ public class Book {
     )
     private Integer id;
     private String title;
+
     @ManyToMany
     @JoinTable(
             name= "books_authors",
@@ -34,6 +37,7 @@ public class Book {
     private String readerCategory;
     private String bookCategory;
     private String isbn;
+
     @ManyToMany
     @JoinTable(
             name = "books_subjects",
@@ -137,20 +141,17 @@ public class Book {
 //endregion
 
     //region equals and hashCode
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors) && Objects.equals(summary, book.summary) && Objects.equals(publicationDate, book.publicationDate) && Objects.equals(readerCategory, book.readerCategory) && Objects.equals(bookCategory, book.bookCategory) && Objects.equals(isbn, book.isbn) && Objects.equals(subjects, book.subjects) && Objects.equals(subSubjects, book.subSubjects);
+        return Objects.equals(id, book.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, authors, summary, publicationDate, readerCategory, bookCategory, isbn, subjects, subSubjects);
+        return Objects.hash(id);
     }
-
-
     //endregion
 
     //region toString

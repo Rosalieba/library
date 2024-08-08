@@ -2,6 +2,7 @@ package com.books.library.subject;
 
 import com.books.library.author.Author;
 import com.books.library.book.Book;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class Subject {
     )
     private Integer id;
     private String subjectName;
+
     @ManyToMany
     @JoinTable(
             name = "books_subjects",
@@ -30,6 +32,7 @@ public class Subject {
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private Set<Book> books = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
             name = "authors_subjects",
@@ -101,13 +104,15 @@ public class Subject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Subject subject)) return false;
-        return Objects.equals(id, subject.id) && Objects.equals(subjectName, subject.subjectName) && Objects.equals(books, subject.books) && Objects.equals(authors, subject.authors) && Objects.equals(subSubjects, subject.subSubjects);
+        return Objects.equals(id, subject.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, subjectName, books, authors, subSubjects);
+        return Objects.hash(id);
     }
+
+
     //endregion
 
     //region toString

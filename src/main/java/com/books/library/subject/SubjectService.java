@@ -24,9 +24,21 @@ public class SubjectService {
     //endregion
 
     //region CRUD methods
+
+    /**
+     * GET ALL SUBJECTS
+     * @return subjects
+     */
     public List<Subject> getSubjects() {
         return this.subjectRepository.findAll();
     }
+
+    /**
+     * CREATE ONE SUBJET
+     * @param subjectName
+     * @param bookIds
+     * @param authorIds
+     */
 
     public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds) {
         Subject subject = new Subject();
@@ -50,43 +62,50 @@ public class SubjectService {
         this.subjectRepository.save(subject);
     }
 
+    /**
+     * UPDATE-PATCH ONE SUBJECT
+     * @param id
+     * @param subjectName
+     * @param bookIds
+     * @param authorIds
+     */
     public void patchSubject(Integer id, String subjectName, List<Integer> bookIds, List<Integer> authorIds) {
         Subject existingSubject = subjectRepository.findById(id).orElse(null);
-        Set<Book> books = new HashSet<>();
-        Set<Author> authors = new HashSet<>();
 
         if (existingSubject != null) {
             if (subjectName != null) {
                 existingSubject.setSubjectName(subjectName);
             }
             if (bookIds != null) {
+                existingSubject.getBooks().clear();
                 for (Integer bookId:bookIds) {
                     Book book = bookRepository.findById(bookId).orElse(null);
                     if (book != null) {
-                        books.add(book);
+                        existingSubject.getBooks().add(book);
                     } else {
-                        //TODO exception handling
+                        //TODO exception handling, bad request error
                     }
                 }
-                existingSubject.setBooks(books);
             }
             if (authorIds != null) {
+                existingSubject.getAuthors().clear();
                 for (Integer authorId:authorIds) {
                     Author author = authorRepository.findById(authorId).orElse(null);
                     if (author != null) {
-                        authors.add(author);
+                        existingSubject.getAuthors().add(author);
                     } else {
                         //TODO exception handling
                     }
                 }
-                existingSubject.setAuthors(authors);
             }
             this.subjectRepository.save(existingSubject);
         }
-
-
     }
 
+    /**
+     * DELETE ONE SUBJECT
+     * @param id
+     */
     public void deleteSubject(Integer id) {
         this.subjectRepository.deleteById(id);
     }

@@ -2,6 +2,7 @@ package com.books.library.author;
 
 import com.books.library.book.Book;
 import com.books.library.subject.Subject;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class Author {
     private Integer id;
     private String forename;
     private String surname;
+
     @ManyToMany
     @JoinTable(
             name= "books_authors",
@@ -30,6 +32,7 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private Set<Book> books = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
             name = "authors_subjects",
@@ -39,7 +42,7 @@ public class Author {
     private Set<Subject> subjects = new HashSet<>();
 
 
-    private List<String> subSubjects = new ArrayList<>();
+    private Set<String> subSubjects = new HashSet<>();
     //endregion
 
     //region constructor
@@ -87,34 +90,29 @@ public class Author {
         this.subjects = subjects;
     }
 
-    public List<String> getSubSubjects() {
+    public Set<String> getSubSubjects() {
         return subSubjects;
     }
 
-    public void setSubSubjects(List<String> subSubjects) {
+    public void setSubSubjects(Set<String> subSubjects) {
         this.subSubjects = subSubjects;
     }
 //endregion
 
     //region equals and hashcode
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Author author)) return false;
-        return Objects.equals(id, author.id) && Objects.equals(forename, author.forename) && Objects.equals(surname, author.surname) && Objects.equals(books, author.books) && Objects.equals(subjects, author.subjects) && Objects.equals(subSubjects, author.subSubjects);
+        return Objects.equals(id, author.id);
     }
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, forename, surname, books, subjects, subSubjects);
+        return Objects.hash(id);
     }
-
-
     //endregion
 
     //region toString
-
     @Override
     public String toString() {
         return "Author{" +
@@ -126,6 +124,5 @@ public class Author {
                 ", subSubjects=" + subSubjects +
                 '}';
     }
-
     //endregion
 }

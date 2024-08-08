@@ -26,10 +26,26 @@ public class BookService {
     //endregion
 
     //region CRUD methods
+
+    /**
+     * GET ALL BOOKS
+     * @return books
+     */
     public List<Book> getBooks() {
         return this.bookRepository.findAll();
     }
 
+    /**
+     * CREATE ONE BOOK
+     * @param title
+     * @param authorIds
+     * @param summary
+     * @param publicationDate
+     * @param readerCategory
+     * @param bookCategory
+     * @param isbn
+     * @param subjectIds
+     */
     public void createBook(String title, List<Integer> authorIds, String summary, Date publicationDate,
                            String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds) {
         book.setTitle(title);
@@ -57,26 +73,38 @@ public class BookService {
        this.bookRepository.save(book);
     }
 
+    /**
+     * UPDATE-PATCH ONE BOOK
+     * @param id
+     * @param title
+     * @param authorIds
+     * @param summary
+     * @param publicationDate
+     * @param readerCategory
+     * @param bookCategory
+     * @param isbn
+     * @param subjectIds
+     */
     public void patchBook(Integer id, String title, List<Integer> authorIds, String summary, Date publicationDate,
                           String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds){
         Book existingBook = bookRepository.findById(id).orElse(null);
-        Set<Author> authors = new HashSet<>();
-        Set<Subject> subjects = new HashSet<>();
+
+
 
         if (existingBook != null) {
             if (title != null) {
                 existingBook.setTitle(title);
             }
             if (authorIds != null) {
+                existingBook.getAuthors().clear();
                 for (Integer authorId:authorIds) {
                     Author author = authorRepository.findById(authorId).orElse(null);
                     if (author != null) {
-                        authors.add(author);
+                        existingBook.getAuthors().add(author);
                     } else {
                         //TODO exception handling
                     }
                 }
-                existingBook.setAuthors(authors);
             }
             if (summary != null) {
                 existingBook.setSummary(summary);
@@ -94,26 +122,25 @@ public class BookService {
                 existingBook.setIsbn(isbn);
             }
             if (subjectIds != null) {
+                existingBook.getSubjects().clear();
                 for (Integer subjectId:subjectIds) {
                     Subject subject = subjectRepository.findById(subjectId).orElse(null);
                     if (subject != null) {
-                        subjects.add(subject);
+                        existingBook.getSubjects().add(subject);
                     } else {
                         //TODO exception handling
                     }
                 }
-                existingBook.setSubjects(subjects);
             }
             this.bookRepository.save(existingBook);
 
         }
-        /*Function<String, String> testFunction = (input) -> {
-            return input + " X";
-
-        };
-        testFunction.apply("Hello ");*/
     }
 
+    /**
+     * DELETE ONE BOOK
+     * @param id
+     */
     public void deleteBook(Integer id) {
         this.bookRepository.deleteById(id);
     }

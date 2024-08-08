@@ -4,9 +4,11 @@ import com.books.library.author.Author;
 import com.books.library.author.AuthorRepository;
 import com.books.library.book.Book;
 import com.books.library.book.BookRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +42,7 @@ public class SubjectService {
      * @param authorIds
      */
 
-    public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds) {
+    public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String> subSubjectNames) {
         Subject subject = new Subject();
         subject.setSubjectName(subjectName);
         for (Integer bookId:bookIds) {
@@ -59,6 +61,13 @@ public class SubjectService {
                 //TODO exception handling
             }
         }
+        for (String subSubjectName: subSubjectNames) {
+            Subject subSubject = new Subject();
+            subSubject = subjectRepository.save(subSubject);
+            subject.getSubSubjects().add(subSubject);
+        }
+
+
         this.subjectRepository.save(subject);
     }
 

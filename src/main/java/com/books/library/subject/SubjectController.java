@@ -23,7 +23,8 @@ public class SubjectController {
 
     @PostMapping
     public void createSubject(@RequestBody AddSubjectRequest request) {
-        this.subjectService.createSubject(request.subjectName(), request.bookIds(), request.authorIds());
+        this.subjectService.createSubject(request.subjectName(), request.bookIds(),
+                request.authorIds(), request.subSubjectNames());
     }
 
     @PatchMapping(path = "{subjectId}")
@@ -38,7 +39,8 @@ public class SubjectController {
     //endregion
 
     //region record classes
-    public record AddSubjectRequest(String subjectName, List<Integer> bookIds, List<Integer> authorIds) {}
+    public record AddSubjectRequest(String subjectName, List<Integer> bookIds,
+                                    List<Integer> authorIds, List<String>subSubjectNames) {}
 
     public record PatchSubjectRequest(String subjectName, List<Integer> bookIds, List<Integer> authorIds){}
     //endregion

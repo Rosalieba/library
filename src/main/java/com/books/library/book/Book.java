@@ -45,8 +45,13 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private Set<Subject> subjects = new HashSet<>();
-
-    private Set<String> subSubjects = new HashSet<>();
+    @ManyToMany
+    @JoinTable (
+            name = "subsubjects",
+            joinColumns = @JoinColumn(name = "subjectsubject_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private Set<Subject> subSubjects = new HashSet<>();
     //endregion
 
     //region constructor
@@ -116,7 +121,7 @@ public class Book {
         return subjects;
     }
 
-    public void setSubSubject(Set<String> subSubjects) {
+    public void setSubSubject(Set<Subject> subSubjects) {
         this.subSubjects = subSubjects;
     }
 
@@ -131,11 +136,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public Set<String> getSubSubjects() {
+    public Set<Subject> getSubSubjects() {
         return subSubjects;
     }
 
-    public void setSubSubjects(Set<String> subSubjects) {
+    public void setSubSubjects(Set<Subject> subSubjects) {
         this.subSubjects = subSubjects;
     }
 //endregion

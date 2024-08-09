@@ -47,7 +47,7 @@ public class BookService {
      * @param subjectIds
      */
     public void createBook(String title, List<Integer> authorIds, String summary, Date publicationDate,
-                           String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds) {
+                           String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds, List<Integer> subSubjectIds) {
         book.setTitle(title);
         for (Integer authorId:authorIds) {
             Author author = authorRepository.findById(authorId).orElse(null);
@@ -70,6 +70,18 @@ public class BookService {
                 //TODO exception handling
             }
         }
+        if (subSubjectIds != null) {
+            for (Integer subSubjectId:subSubjectIds) {
+                Subject subSubject = subjectRepository.findById(subSubjectId).orElse(null);
+                if (subSubject != null) {
+                    book.getSubSubjects().add(subSubject);
+                } else {
+                    //TODO exception handling
+                }
+            }
+
+        }
+
        this.bookRepository.save(book);
     }
 

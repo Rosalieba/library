@@ -23,8 +23,13 @@ public class SubjectController {
 
     @PostMapping
     public void createSubject(@RequestBody AddSubjectRequest request) {
-        this.subjectService.createSubject(request.subjectName(), request.bookIds(),
-                request.authorIds(), request.subSubjectNames());
+        try {
+            this.subjectService.createSubject(request.subjectName(), request.bookIds(),
+                    request.authorIds(), request.subSubjectNames());
+        } catch (SubjectService.SubjectAlreadyExistException e) {
+            //bad request
+        };
+
     }
 
     @PatchMapping(path = "{subjectId}")

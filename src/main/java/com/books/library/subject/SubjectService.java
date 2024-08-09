@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,33 +44,45 @@ public class SubjectService {
      */
 
     public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String> subSubjectNames) {
+        createSubjectValidation(subjectName, subSubjectNames);
         Subject subject = new Subject();
         subject.setSubjectName(subjectName);
-        for (Integer bookId:bookIds) {
-            Book book = bookRepository.findById(bookId).orElse(null);
-            if (book != null) {
-                subject.getBooks().add(book);
-            } else {
-                //TODO exception handling
+        if (bookIds != null) {
+            for (Integer bookId:bookIds) {
+                Book book = bookRepository.findById(bookId).orElse(null);
+                if (book != null) {
+                    subject.getBooks().add(book);
+                } else {
+                    //TODO exception handling
+                }
             }
         }
-        for (Integer authorId:authorIds) {
-            Author author = authorRepository.findById(authorId).orElse(null);
-            if (author != null) {
-                subject.getAuthors().add(author);
-            } else {
-                //TODO exception handling
+
+        if (authorIds != null) {
+            for (Integer authorId:authorIds) {
+                Author author = authorRepository.findById(authorId).orElse(null);
+                if (author != null) {
+                    subject.getAuthors().add(author);
+                } else {
+                    //TODO exception handling
+                }
             }
         }
-        for (String subSubjectName: subSubjectNames) {
-            Subject subSubject = new Subject();
-            subSubject = subjectRepository.save(subSubject);
-            subject.getSubSubjects().add(subSubject);
+
+        if (subSubjectNames != null) {
+            for (String subSubjectName: subSubjectNames) {
+                Subject subSubject = new Subject();
+                subSubject.setSubjectName(subSubjectName);
+                subSubject = subjectRepository.save(subSubject);
+                subject.getSubSubjects().add(subSubject);
+            }
         }
+
 
 
         this.subjectRepository.save(subject);
     }
+
 
     /**
      * UPDATE-PATCH ONE SUBJECT
@@ -117,6 +130,25 @@ public class SubjectService {
      */
     public void deleteSubject(Integer id) {
         this.subjectRepository.deleteById(id);
+    }
+    //endregion
+
+    //region helpers
+    public static class SubjectAlreadyExistException extends RuntimeException {
+
+    }
+
+    private void createSubjectValidation(String subjectName, List<String> subSubjectNames) {
+        Subject subject = this.subjectRepository.findOneBySubjectName(subjectName);
+        if (subject != null) {
+            throw new SubjectAlreadyExistException();
+        }
+        for (String subSubjectName: subSubjectNames) {
+            subject = this.subjectRepository.findOneBySubjectName(subSubjectName);
+            if (subject != null) {
+                throw new SubjectAlreadyExistException();
+            }
+        }
     }
     //endregion
 

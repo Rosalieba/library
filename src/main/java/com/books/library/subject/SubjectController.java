@@ -34,7 +34,7 @@ public class SubjectController {
 
     @PatchMapping(path = "{subjectId}")
     public void updateSubject(@PathVariable("subjectId") Integer id, @RequestBody PatchSubjectRequest request) {
-        this.subjectService.patchSubject(id, request.subjectName(), request.bookIds(),request.authorIds());
+        this.subjectService.patchSubject(id, request.subjectName(), request.bookIds(),request.authorIds(),request.subSubjectNames());
     }
 
     @DeleteMapping(path = "{subjectId}")
@@ -47,6 +47,6 @@ public class SubjectController {
     public record AddSubjectRequest(String subjectName, List<Integer> bookIds,
                                     List<Integer> authorIds, List<String>subSubjectNames) {}
 
-    public record PatchSubjectRequest(String subjectName, List<Integer> bookIds, List<Integer> authorIds){}
+    public record PatchSubjectRequest(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String>subSubjectNames){}
     //endregion
 }

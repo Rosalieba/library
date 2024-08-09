@@ -27,7 +27,6 @@ public class SubjectService {
     //endregion
 
     //region CRUD methods
-
     /**
      * GET ALL SUBJECTS
      * @return subjects
@@ -35,14 +34,12 @@ public class SubjectService {
     public List<Subject> getSubjects() {
         return this.subjectRepository.findAll();
     }
-
     /**
      * CREATE ONE SUBJET
      * @param subjectName
      * @param bookIds
      * @param authorIds
      */
-
     public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String> subSubjectNames) {
         createSubjectValidation(subjectName, subSubjectNames);
         Subject subject = new Subject();
@@ -77,13 +74,8 @@ public class SubjectService {
                 subject.getSubSubjects().add(subSubject);
             }
         }
-
-
-
         this.subjectRepository.save(subject);
     }
-
-
     /**
      * UPDATE-PATCH ONE SUBJECT
      * @param id
@@ -91,7 +83,7 @@ public class SubjectService {
      * @param bookIds
      * @param authorIds
      */
-    public void patchSubject(Integer id, String subjectName, List<Integer> bookIds, List<Integer> authorIds) {
+    public void patchSubject(Integer id, String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String> subSubjectNames) {
         Subject existingSubject = subjectRepository.findById(id).orElse(null);
 
         if (existingSubject != null) {
@@ -120,10 +112,23 @@ public class SubjectService {
                     }
                 }
             }
+            if (subSubjectNames != null) {
+                existingSubject.getSubSubjects().clear();
+                for (String subSubjectName: subSubjectNames) {
+                     Subject subSubject = subjectRepository.findOneBySubjectName(subSubjectName);
+                    if (subSubject != null) {
+                        existingSubject.getSubSubjects().add(subSubject);
+                    } else {
+                        Subject newSubSubject = new Subject();
+                        newSubSubject.setSubjectName(subSubjectName);
+                        subSubject = subjectRepository.save(newSubSubject);
+                        existingSubject.getSubSubjects().add(subSubject);
+                    }
+                }
+            }
             this.subjectRepository.save(existingSubject);
         }
     }
-
     /**
      * DELETE ONE SUBJECT
      * @param id

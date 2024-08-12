@@ -57,7 +57,6 @@ public class Book {
     private String borrowerName;
     private String language;
     private String teaser;
-
     //endregion members
 
     //region constructor
@@ -88,6 +87,13 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    public String getTeaser() {
+        return teaser;
+    }
+    public void setTeaser(String teaser) {
+        this.teaser = teaser;
     }
 
     public String getSummary() {
@@ -148,7 +154,39 @@ public class Book {
     public void setSubSubjects(Set<Subject> subSubjects) {
         this.subSubjects = subSubjects;
     }
-//endregion getter and setter
+
+    public Boolean getStillInLibrary() {
+        return isStillInLibrary;
+    }
+
+    public void setStillInLibrary(Boolean stillInLibrary) {
+        isStillInLibrary = stillInLibrary;
+    }
+
+    public Boolean getBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(Boolean borrowed) {
+        isBorrowed = borrowed;
+    }
+
+    public String getBorrowerName() {
+        return borrowerName;
+    }
+
+    public void setBorrowerName(String borrowerName) {
+        this.borrowerName = borrowerName;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+    //endregion getter and setter
 
     //region equals and hashCode
     @Override
@@ -170,7 +208,7 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author=" + authors +
+                ", authors=" + authors +
                 ", summary='" + summary + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", readerCategory='" + readerCategory + '\'' +
@@ -178,6 +216,11 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", subjects=" + subjects +
                 ", subSubjects=" + subSubjects +
+                ", isStillInLibrary=" + isStillInLibrary +
+                ", isBorrowed=" + isBorrowed +
+                ", borrowerName='" + borrowerName + '\'' +
+                ", language='" + language + '\'' +
+                ", teaser='" + teaser + '\'' +
                 '}';
     }
     //endregion toString

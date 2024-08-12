@@ -52,15 +52,20 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private Set<Subject> subSubjects = new HashSet<>();
-    //endregion
+    private Boolean isStillInLibrary;
+    private Boolean isBorrowed;
+    private String borrowerName;
+    private String language;
+    private String teaser;
+
+    //endregion members
 
     //region constructor
     public Book() {
     }
-    //endregion
+    //endregion constructor
 
     //region getter and setter
-
     public Integer getId() {
         return id;
     }
@@ -143,7 +148,7 @@ public class Book {
     public void setSubSubjects(Set<Subject> subSubjects) {
         this.subSubjects = subSubjects;
     }
-//endregion
+//endregion getter and setter
 
     //region equals and hashCode
     @Override
@@ -157,10 +162,9 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id);
     }
-    //endregion
+    //endregion equals and hashCode
 
     //region toString
-
     @Override
     public String toString() {
         return "Book{" +
@@ -176,7 +180,5 @@ public class Book {
                 ", subSubjects=" + subSubjects +
                 '}';
     }
-
-
-    //endregion
+    //endregion toString
 }

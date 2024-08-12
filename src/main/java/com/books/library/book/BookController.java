@@ -13,7 +13,7 @@ public class BookController {
     //region members
     @Autowired
     private BookService bookService;
-    //endregion
+    //endregion members
 
     //region endpoints
     @GetMapping
@@ -22,26 +22,29 @@ public class BookController {
     }
     @PostMapping
     public void createBook(@RequestBody AddBookRequest request) {
-        this.bookService.createBook(request.title(), request.authorIds(), request.summary(), request.publicationDate(),
-                request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds(), request.subSubjectIds());
+        this.bookService.createBook(request.title(), request.authorIds(), request.teaser(), request.summary(), request.publicationDate(),
+                request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds(), request.subSubjectIds(), request.isStillInLibrary(),
+                request.isBorrowed(), request.borrowerName(), request.language());
     }
     @PatchMapping(path = "{bookId}")
     public void updateBook(@PathVariable("bookId") Integer id, @RequestBody PatchBookRequest request) {
-        this.bookService.patchBook(id, request.title(), request.authorIds(), request.summary(),
-                request.publicationDate(), request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds());
+        this.bookService.patchBook(id, request.title(), request.authorIds(), request.teaser(), request.summary(),
+                request.publicationDate(), request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds(), request.isStillInLibrary(),
+                request.isBorrowed(), request.borrowerName(), request.language());
     }
     @DeleteMapping(path = "{bookId}")
     public void deleteBook(@PathVariable("bookId") Integer id) {
         this.bookService.deleteBook(id);
     }
-    //endregion
+    //endregion endpoints
 
-    //region record
-    public record AddBookRequest(String title, List<Integer> authorIds, String summary, Date publicationDate,
+    //region records
+    public record AddBookRequest(String title, List<Integer> authorIds, String teaser, String summary, Date publicationDate,
                                  String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds,
-                                 List<Integer> subSubjectIds){};
+                                 List<Integer> subSubjectIds, Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language){};
 
-    public record PatchBookRequest(String title, List<Integer> authorIds, String summary, Date publicationDate,
-                                   String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds) {};
-    //endregion
+    public record PatchBookRequest(String title, List<Integer> authorIds, String teaser, String summary, Date publicationDate,
+                                   String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds,
+                                   Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language) {};
+    //endregion records
 }

@@ -46,8 +46,9 @@ public class BookService {
      * @param isbn
      * @param subjectIds
      */
-    public void createBook(String title, List<Integer> authorIds, String summary, Date publicationDate,
-                           String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds, List<Integer> subSubjectIds) {
+    public void createBook(String title, List<Integer> authorIds, String teaser,String summary, Date publicationDate,
+                           String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds, List<Integer> subSubjectIds,
+                           Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language) {
         book.setTitle(title);
         for (Integer authorId:authorIds) {
             Author author = authorRepository.findById(authorId).orElse(null);
@@ -57,6 +58,7 @@ public class BookService {
                 //TODO exception handling
             }
         }
+        book.setTeaser(teaser);
         book.setSummary(summary);
         book.setPublicationDate(publicationDate);
         book.setReaderCategory(readerCategory);
@@ -81,6 +83,10 @@ public class BookService {
             }
 
         }
+        book.setStillInLibrary(isStillInLibrary);
+        book.setBorrowed(isBorrowed);
+        book.setBorrowerName(borrowerName);
+        book.setLanguage(language);
 
        this.bookRepository.save(book);
     }
@@ -97,12 +103,10 @@ public class BookService {
      * @param isbn
      * @param subjectIds
      */
-    public void patchBook(Integer id, String title, List<Integer> authorIds, String summary, Date publicationDate,
-                          String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds){
+    public void patchBook(Integer id, String title, List<Integer> authorIds, String teaser, String summary, Date publicationDate,
+                          String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds,
+                          Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language){
         Book existingBook = bookRepository.findById(id).orElse(null);
-
-
-
         if (existingBook != null) {
             if (title != null) {
                 existingBook.setTitle(title);
@@ -117,6 +121,9 @@ public class BookService {
                         //TODO exception handling
                     }
                 }
+            }
+            if (teaser != null) {
+                existingBook.setTeaser(teaser);
             }
             if (summary != null) {
                 existingBook.setSummary(summary);
@@ -144,8 +151,19 @@ public class BookService {
                     }
                 }
             }
+            if (isStillInLibrary != null) {
+                existingBook.setStillInLibrary(isStillInLibrary);
+            }
+            if (isBorrowed != null) {
+                existingBook.setBorrowed(isBorrowed);
+            }
+            if (borrowerName != null) {
+                existingBook.setBorrowerName(borrowerName);
+            }
+            if (language != null) {
+                existingBook.setLanguage(language);
+            }
             this.bookRepository.save(existingBook);
-
         }
     }
 

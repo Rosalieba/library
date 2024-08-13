@@ -23,7 +23,7 @@ public class BookController {
     @PostMapping
     public void createBook(@RequestBody AddBookRequest request) {
         this.bookService.createBook(request.title(), request.authorIds(), request.teaser(), request.summary(), request.publicationDate(),
-                request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds(), request.subSubjectIds(), request.isStillInLibrary(),
+                request.readerCategory(), request.bookCategory(), request.isbn(), request.subjectIds(), request.isStillInLibrary(),
                 request.isBorrowed(), request.borrowerName(), request.language());
     }
     @PatchMapping(path = "{bookId}")
@@ -40,8 +40,7 @@ public class BookController {
 
     //region records
     public record AddBookRequest(String title, List<Integer> authorIds, String teaser, String summary, Date publicationDate,
-                                 String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds,
-                                 List<Integer> subSubjectIds, Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language){};
+                                 String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds, Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language){};
 
     public record PatchBookRequest(String title, List<Integer> authorIds, String teaser, String summary, Date publicationDate,
                                    String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds,

@@ -45,13 +45,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private Set<Subject> subjects = new HashSet<>();
-    @ManyToMany
-    @JoinTable (
-            name = "subsubjects",
-            joinColumns = @JoinColumn(name = "subjectsubject_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id")
-    )
-    private Set<Subject> subSubjects = new HashSet<>();
+
     private Boolean isStillInLibrary;
     private Boolean isBorrowed;
     private String borrowerName;
@@ -95,7 +89,6 @@ public class Book {
     public void setTeaser(String teaser) {
         this.teaser = teaser;
     }
-
     public String getSummary() {
         return summary;
     }
@@ -132,10 +125,6 @@ public class Book {
         return subjects;
     }
 
-    public void setSubSubject(Set<Subject> subSubjects) {
-        this.subSubjects = subSubjects;
-    }
-
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
@@ -145,14 +134,6 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public Set<Subject> getSubSubjects() {
-        return subSubjects;
-    }
-
-    public void setSubSubjects(Set<Subject> subSubjects) {
-        this.subSubjects = subSubjects;
     }
 
     public Boolean getStillInLibrary() {
@@ -215,7 +196,6 @@ public class Book {
                 ", bookCategory='" + bookCategory + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", subjects=" + subjects +
-                ", subSubjects=" + subSubjects +
                 ", isStillInLibrary=" + isStillInLibrary +
                 ", isBorrowed=" + isBorrowed +
                 ", borrowerName='" + borrowerName + '\'' +

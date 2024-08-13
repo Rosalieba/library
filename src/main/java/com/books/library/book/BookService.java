@@ -50,33 +50,59 @@ public class BookService {
                            String readerCategory, String bookCategory, String isbn, List<Integer> subjectIds,
                            Boolean isStillInLibrary, Boolean isBorrowed, String borrowerName, String language) {
         book.setTitle(title);
-        for (Integer authorId:authorIds) {
-            Author author = authorRepository.findById(authorId).orElse(null);
-            if (author != null){
-                book.getAuthors().add(author);
-            } else {
-                //TODO exception handling
+        if (authorIds != null) {
+            for (Integer authorId:authorIds) {
+                Author author = authorRepository.findById(authorId).orElse(null);
+                if (author != null){
+                    book.getAuthors().add(author);
+                } else {
+                    //TODO exception handling
+                }
             }
         }
-        book.setTeaser(teaser);
-        book.setSummary(summary);
-        book.setPublicationDate(publicationDate);
-        book.setReaderCategory(readerCategory);
-        book.setBookCategory(bookCategory);
-        book.setIsbn(isbn);
-        for (Integer subjectId:subjectIds) {
-            Subject subject = subjectRepository.findById(subjectId).orElse(null);
-            if (subject != null){
-                book.getSubjects().add(subject);
-            } else {
-                //TODO exception handling
+        if (teaser != null) {
+            book.setTeaser(teaser);
+        }
+        if (summary != null) {
+            book.setSummary(summary);
+        }
+        if (publicationDate != null) {
+            book.setPublicationDate(publicationDate);
+        }
+        if (readerCategory != null) {
+            book.setPublicationDate(publicationDate);
+        }
+        if (readerCategory != null) {
+            book.setReaderCategory(readerCategory);
+        }
+        if (bookCategory != null) {
+            book.setBookCategory(bookCategory);
+        }
+        if (isbn != null) {
+            book.setIsbn(isbn);
+        }
+        if (subjectIds != null) {
+            for (Integer subjectId:subjectIds) {
+                Subject subject = subjectRepository.findById(subjectId).orElse(null);
+                if (subject != null){
+                    book.getSubjects().add(subject);
+                } else {
+                    //TODO exception handling
+                }
             }
         }
-        book.setStillInLibrary(isStillInLibrary);
-        book.setBorrowed(isBorrowed);
-        book.setBorrowerName(borrowerName);
-        book.setLanguage(language);
-
+        if (isStillInLibrary != null) {
+            book.setStillInLibrary(isStillInLibrary);
+        }
+        if (isBorrowed != null) {
+            book.setBorrowed(isBorrowed);
+        }
+        if (borrowerName != null) {
+            book.setBorrowerName(borrowerName);
+        }
+        if (language != null) {
+            book.setLanguage(language);
+        }
        this.bookRepository.save(book);
     }
 

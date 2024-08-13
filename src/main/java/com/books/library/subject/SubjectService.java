@@ -40,8 +40,8 @@ public class SubjectService {
      * @param bookIds
      * @param authorIds
      */
-    public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String> subSubjectNames) {
-        createSubjectValidation(subjectName, subSubjectNames);
+    public void createSubject(String subjectName, List<Integer> bookIds, List<Integer> authorIds) {
+        createSubjectValidation(subjectName);
         Subject subject = new Subject();
         subject.setSubjectName(subjectName);
         if (bookIds != null) {
@@ -54,7 +54,6 @@ public class SubjectService {
                 }
             }
         }
-
         if (authorIds != null) {
             for (Integer authorId:authorIds) {
                 Author author = authorRepository.findById(authorId).orElse(null);
@@ -65,15 +64,14 @@ public class SubjectService {
                 }
             }
         }
-
-        if (subSubjectNames != null) {
+        /*if (subSubjectNames != null) {
             for (String subSubjectName: subSubjectNames) {
                 Subject subSubject = new Subject();
                 subSubject.setSubjectName(subSubjectName);
                 subSubject = subjectRepository.save(subSubject);
                 subject.getSubSubjects().add(subSubject);
             }
-        }
+        }*/
         this.subjectRepository.save(subject);
     }
     /**
@@ -83,7 +81,7 @@ public class SubjectService {
      * @param bookIds
      * @param authorIds
      */
-    public void patchSubject(Integer id, String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String> subSubjectNames) {
+    public void patchSubject(Integer id, String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<Integer> subSubjectIds) {
         Subject existingSubject = subjectRepository.findById(id).orElse(null);
 
         if (existingSubject != null) {
@@ -112,17 +110,14 @@ public class SubjectService {
                     }
                 }
             }
-            if (subSubjectNames != null) {
+            if (subSubjectIds != null) {
                 existingSubject.getSubSubjects().clear();
-                for (String subSubjectName: subSubjectNames) {
-                     Subject subSubject = subjectRepository.findOneBySubjectName(subSubjectName);
+                for (Integer subSubjectId: subSubjectIds) {
+                     Subject subSubject = subjectRepository.findById(subSubjectId).orElse(null);
                     if (subSubject != null) {
                         existingSubject.getSubSubjects().add(subSubject);
                     } else {
-                        Subject newSubSubject = new Subject();
-                        newSubSubject.setSubjectName(subSubjectName);
-                        subSubject = subjectRepository.save(newSubSubject);
-                        existingSubject.getSubSubjects().add(subSubject);
+                        //TODO exception handling
                     }
                 }
             }
@@ -143,17 +138,17 @@ public class SubjectService {
 
     }
 
-    private void createSubjectValidation(String subjectName, List<String> subSubjectNames) {
+    private void createSubjectValidation(String subjectName) {
         Subject subject = this.subjectRepository.findOneBySubjectName(subjectName);
         if (subject != null) {
             throw new SubjectAlreadyExistException();
         }
-        for (String subSubjectName: subSubjectNames) {
+        /*for (String subSubjectName: subSubjectNames) {
             subject = this.subjectRepository.findOneBySubjectName(subSubjectName);
             if (subject != null) {
                 throw new SubjectAlreadyExistException();
             }
-        }
+        }*/
     }
     //endregion
 

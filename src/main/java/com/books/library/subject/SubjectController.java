@@ -25,7 +25,7 @@ public class SubjectController {
     public void createSubject(@RequestBody AddSubjectRequest request) {
         try {
             this.subjectService.createSubject(request.subjectName(), request.bookIds(),
-                    request.authorIds(), request.subSubjectNames());
+                    request.authorIds());
         } catch (SubjectService.SubjectAlreadyExistException e) {
             //bad request
         };
@@ -34,7 +34,7 @@ public class SubjectController {
 
     @PatchMapping(path = "{subjectId}")
     public void updateSubject(@PathVariable("subjectId") Integer id, @RequestBody PatchSubjectRequest request) {
-        this.subjectService.patchSubject(id, request.subjectName(), request.bookIds(),request.authorIds(),request.subSubjectNames());
+        this.subjectService.patchSubject(id, request.subjectName(), request.bookIds(),request.authorIds(),request.subSubjectIds());
     }
 
     @DeleteMapping(path = "{subjectId}")
@@ -45,8 +45,8 @@ public class SubjectController {
 
     //region record classes
     public record AddSubjectRequest(String subjectName, List<Integer> bookIds,
-                                    List<Integer> authorIds, List<String>subSubjectNames) {}
+                                    List<Integer> authorIds) {}
 
-    public record PatchSubjectRequest(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<String>subSubjectNames){}
+    public record PatchSubjectRequest(String subjectName, List<Integer> bookIds, List<Integer> authorIds, List<Integer>subSubjectIds){}
     //endregion
 }

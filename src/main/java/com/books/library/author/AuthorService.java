@@ -44,21 +44,27 @@ public class AuthorService {
     public void createAuthor(String forename, String surname, List<Integer> bookIds, List<Integer> subjectIds) {
 
         author.setForename(forename);
-        author.setSurname(surname);
-        for (Integer bookId:bookIds) {
-            Book book = bookRepository.findById(bookId).orElse(null);
-            if (book != null) {
-                author.getBooks().add(book);
-            } else {
-                //TODO handling exception
+        if (surname != null) {
+            author.setSurname(surname);
+        }
+        if (bookIds != null) {
+            for (Integer bookId:bookIds) {
+                Book book = bookRepository.findById(bookId).orElse(null);
+                if (book != null) {
+                    author.getBooks().add(book);
+                } else {
+                    //TODO handling exception
+                }
             }
         }
-        for (Integer subjectId: subjectIds) {
-            Subject subject = subjectRepository.findById(subjectId).orElse(null);
-            if (subject != null) {
-                author.getSubjects().add(subject);
-            } else {
-                //TODO handling exception
+        if (subjectIds != null) {
+            for (Integer subjectId: subjectIds) {
+                Subject subject = subjectRepository.findById(subjectId).orElse(null);
+                if (subject != null) {
+                    author.getSubjects().add(subject);
+                } else {
+                    //TODO handling exception
+                }
             }
         }
         this.authorRepository.save(author);
